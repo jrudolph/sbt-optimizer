@@ -1,3 +1,3 @@
 addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.2.1")
 
-addSbtPlugin("io.spray" % "sbt-revolver" % "0.7.2")
+addSbtPlugin("net.virtual-void" % "sbt-cross-building" % "0.8.1")

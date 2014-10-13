@@ -2,8 +2,17 @@ libraryDependencies ++= Seq(
   "org.specs2" %% "specs2" % "2.3.12" % "test"
 )
 
-scalaVersion := "2.11.2"
+CrossBuilding.scriptedSettings
 
-ScalariformSupport.formatSettings
+CrossBuilding.crossSbtVersions := Seq("0.12", "0.13")
 
-Revolver.settings
+libraryDependencies <+= CrossBuilding.sbtModuleDependencyInit("scripted-plugin")
+
+crossBuildingSettings
+
+CrossBuilding.latestCompatibleVersionMapper ~= { mapper => version =>
+  version match {
+    case "0.13" => "0.13.6"
+    case x => mapper(x)
+  }
+}
