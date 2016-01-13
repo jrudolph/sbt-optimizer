@@ -1,5 +1,6 @@
 package net.virtualvoid.optimizer
 
+import java.io.File
 import java.util.concurrent.ConcurrentHashMap
 
 import sbt.Task
@@ -34,6 +35,9 @@ object ExecutionProgressReporter {
   }
 
   def report(dataMap: ConcurrentHashMap[Task[_], TaskTiming]): Unit = {
+    DotOutput.writeTo(new File("taskout.dot"), dataMap)
+    CatapultTraceEventWriter.writeTo(new File("trace.json"), dataMap)
+
     // report
     import scala.collection.JavaConverters._
     val datas = dataMap.elements().asScala.toVector
