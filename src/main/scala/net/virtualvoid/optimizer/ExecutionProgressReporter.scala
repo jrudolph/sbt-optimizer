@@ -17,6 +17,7 @@ object ExecutionProgressReporter {
       startTime: Option[Long] = None,
       finishTime: Option[Long] = None,
       completeTime: Option[Long] = None,
+      threadId: Long = -1,
       locks: Seq[IvyLockReporter.SpentTimeInLock] = Nil,
       downloads: Seq[NetworkAccess] = Nil) {
     def workTime: Option[Long] = diff(startTime, finishTime)

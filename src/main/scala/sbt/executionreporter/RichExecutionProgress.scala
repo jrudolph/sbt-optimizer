@@ -40,7 +40,7 @@ private[sbt] class RichExecutionProgress extends ExecuteProgress[Task] {
     require(IvyDownloadReporter.listener.get == null)
     IvyDownloadReporter.listener.set(listener)
     IvyLockReporter.listener.set(lockListener)
-    updateData(task)(_.copy(startTime = theTime()))
+    updateData(task)(_.copy(startTime = theTime(), threadId = Thread.currentThread().getId))
   }
 
   def workFinished[T](task: Task[T], result: Either[Task[T], Result[T]]): Unit = {
