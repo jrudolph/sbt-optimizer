@@ -25,6 +25,8 @@ and enable it in a project with
 enablePlugins(net.virtualvoid.optimizer.SbtOptimizerPlugin)
 ```
 
+After a task has been executed, the plugin will print statistics about the run as explained below.
+
 ## Explanation of the output
 
 A line will be printed for every executed task that was running long enough to occupy a character
@@ -52,3 +54,7 @@ displayed, that summarizes what the task did at which time:
  `XYZ<called-by>` where XYZ was the original named task.
  * another source of tasks are tasks which are defined as `triggeredBy`
  * there's something currently broken with output sorting and some tasks aren't shown for some reason
+
+## License
+
+The project is license under the MIT license. See the [LICENSE file](https://raw.githubusercontent.com/jrudolph/sbt-optimizer/master/LICENSE).
