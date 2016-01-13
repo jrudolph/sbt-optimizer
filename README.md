@@ -32,7 +32,7 @@ in the output line.
 
 Each output line will look like this:
 
-![Line](https://github.com/jrudolph/sbt-optimizer/tree/docs/example-line.png)
+![Line](https://raw.githubusercontent.com/jrudolph/sbt-optimizer/master/docs/example-line.png)
 
 Each output line corresponds to one task that has been executed. The first time is the total time this
 task was running. The second time displayed in green is the actual execution time. The third time displayed in
