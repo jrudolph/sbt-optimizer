@@ -27,6 +27,11 @@ enablePlugins(net.virtualvoid.optimizer.SbtOptimizerPlugin)
 
 ## Explanation of the output
 
+A line will be printed for every executed task that was running long enough to occupy a character
+in the output line.
+
+Each output line will look like this:
+
 ![Line](https://github.com/jrudolph/sbt-optimizer/tree/docs/example-line.png)
 
 Each output line corresponds to one task that has been executed. The first time is the total time this
