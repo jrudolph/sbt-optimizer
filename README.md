@@ -53,7 +53,6 @@ displayed, that summarizes what the task did at which time:
  * sbt allows to inject anonymous follow-up tasks using `Task.flatMap`. These get the special name
  `XYZ<called-by>` where XYZ was the original named task.
  * another source of tasks are tasks which are defined as `triggeredBy`
- * there's something currently broken with output sorting and some tasks aren't shown for some reason
 
 ## License
 

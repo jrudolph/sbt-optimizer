@@ -62,6 +62,20 @@ object ExecutionProgressReporter {
     import scala.collection.JavaConverters._
     val datas = dataMap.elements().asScala.toVector
 
+    var transitiveStartTimeCache = Map.empty[Task[_], Long]
+    def transitiveStartTimeOf(task: Task[_]): Long =
+      transitiveStartTimeCache.get(task) match {
+        case Some(time) ⇒ time
+        case None ⇒
+          val res = calculateTransitiveStartTimeOf(task)
+          transitiveStartTimeCache += task -> res
+          res
+      }
+    def calculateTransitiveStartTimeOf(task: Task[_]): Long = {
+      val timing = dataMap.get(task)
+      timing.deps.map(transitiveStartTimeOf).foldLeft(timing.startTime.get)(_ min _)
+    }
+
     val start = datas.flatMap(_.registerTime).min
     val end = datas.flatMap(_.completeTime).max
     val setup = OutputSetup(start, end)
@@ -71,7 +85,7 @@ object ExecutionProgressReporter {
       if (!visited(element)) {
         visited += element
         val d = dataMap.get(element)
-        d.deps.sortBy(d ⇒ dataMap.get(d).startTime.get).foreach(walkTree)
+        d.deps.sortBy(transitiveStartTimeOf).foreach(walkTree)
         if (d.workTime.get > setup.nanosPerSlot / 2)
           println(line(setup)(d))
       }
