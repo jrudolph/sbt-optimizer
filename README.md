@@ -56,4 +56,4 @@ displayed, that summarizes what the task did at which time:
 
 ## License
 
-The project is license under the MIT license. See the [LICENSE file](https://raw.githubusercontent.com/jrudolph/sbt-optimizer/master/LICENSE).
+The project is license under the Apache License v2. See the [LICENSE file](https://raw.githubusercontent.com/jrudolph/sbt-optimizer/master/LICENSE).
