@@ -1,0 +1,15 @@
+This is the first release of sbt-optimizer, an sbt plugin to collect and report timing data for sbt task execution.
+
+### Usage
+
+Add the plugin to `project/plugins.sbt`:
+
+    addSbtPlugin("net.virtual-void" % "sbt-optimizer" % "0.1.0")
+
+and enable it in a project with
+
+    .enablePlugins(net.virtualvoid.optimizer.SbtOptimizerPlugin)
+
+After a task has been executed, the plugin will print a timeline like this:
+
+![sbt-optimizer output](https://raw.githubusercontent.com/jrudolph/sbt-optimizer/faf2a5328e81b19394c6497d8c9efa12febd821d/docs/example-line.png)
