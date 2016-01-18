@@ -2,7 +2,7 @@ name := "sbt-optimizer"
 
 organization := "net.virtual-void"
 
-version := "0.1.0-SNAPSHOT"
+version := "0.1.0"
 
 homepage := Some(url("http://github.com/jrudolph/sbt-optimizer"))
 
