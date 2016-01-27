@@ -1,0 +1,2 @@
+This release fixes a broken pom-file in the previous release that can sometimes result in an sbt classpath with conflicting
+sbt jars [#7](https://github.com/jrudolph/sbt-optimizer/issues/7).
