@@ -16,5 +16,3 @@ CrossBuilding.latestCompatibleVersionMapper ~= { mapper => version =>
 }
 
 ScalariformSupport.formatSettings
-
-enablePlugins(net.virtualvoid.optimizer.SbtOptimizerPlugin)
