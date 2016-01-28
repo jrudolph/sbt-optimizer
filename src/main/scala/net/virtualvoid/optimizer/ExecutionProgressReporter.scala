@@ -58,16 +58,21 @@ object ExecutionProgressReporter {
 
     var transitiveStartTimeCache = Map.empty[Task[_], Long]
     def transitiveStartTimeOf(task: Task[_]): Long =
-      transitiveStartTimeCache.get(task) match {
-        case Some(time) ⇒ time
-        case None ⇒
-          val res = calculateTransitiveStartTimeOf(task)
-          transitiveStartTimeCache += task → res
-          res
+      transitiveStartTimeCache.get(task) getOrElse {
+        val res = calculateTransitiveStartTimeOf(task)
+        transitiveStartTimeCache += task → res
+        res
       }
     def calculateTransitiveStartTimeOf(task: Task[_]): Long = {
       val timing = dataMap.get(task)
-      timing.deps.map(transitiveStartTimeOf).foldLeft(timing.startTime.get)(_ min _)
+
+      timing.startTime match {
+        case Some(startTime) ⇒ timing.deps
+          .map(transitiveStartTimeOf)
+          .foldLeft(startTime)(_ min _)
+        case None ⇒ 0
+      }
+
     }
 
     val start = datas.flatMap(_.registerTime).min
@@ -80,8 +85,11 @@ object ExecutionProgressReporter {
         visited += element
         val d = dataMap.get(element)
         d.deps.sortBy(transitiveStartTimeOf).foreach(walkTree)
-        if (d.workTime.get > setup.nanosPerSlot / 2)
-          println(line(setup)(d))
+
+        d.workTime.foreach { workTime ⇒
+          if (workTime > setup.nanosPerSlot / 2)
+            println(line(setup)(d))
+        }
       }
 
     def roots: Seq[Task[_]] = {
@@ -100,8 +108,12 @@ object ExecutionProgressReporter {
 
   case class Slot(start: Long, end: Long) {
     def middle = (start + end) / 2
-    def activeDuring(start: Option[Long], end: Option[Long]): Boolean =
-      middle >= start.get && middle < end.get
+    def activeDuring(start: Option[Long], end: Option[Long]): Boolean = {
+      (start, end) match {
+        case (Some(start), Some(end)) ⇒ middle >= start && middle < end
+        case _                        ⇒ false
+      }
+    }
   }
   case class OutputSetup(
       startTime:      Long,
