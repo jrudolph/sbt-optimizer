@@ -26,17 +26,18 @@ object ExecutionProgressReporter {
   def install() = sbt.executionreporter.RichExecutionProgress.install
 
   case class TaskTiming(
-      task: Task[_],
-      taskName: String,
-      deps: Seq[Task[_]] = Nil,
-      registerTime: Option[Long] = None,
-      readyTime: Option[Long] = None,
-      startTime: Option[Long] = None,
-      finishTime: Option[Long] = None,
-      completeTime: Option[Long] = None,
-      threadId: Long = -1,
-      locks: Seq[IvyLockReporter.SpentTimeInLock] = Nil,
-      downloads: Seq[NetworkAccess] = Nil) {
+      task:         Task[_],
+      taskName:     String,
+      deps:         Seq[Task[_]]                         = Nil,
+      registerTime: Option[Long]                         = None,
+      readyTime:    Option[Long]                         = None,
+      startTime:    Option[Long]                         = None,
+      finishTime:   Option[Long]                         = None,
+      completeTime: Option[Long]                         = None,
+      threadId:     Long                                 = -1,
+      locks:        Seq[IvyLockReporter.SpentTimeInLock] = Nil,
+      downloads:    Seq[NetworkAccess]                   = Nil
+  ) {
     def workTime: Option[Long] = diff(startTime, finishTime)
     def totalTime: Option[Long] = diff(registerTime, completeTime)
     def downloadTime: Long = downloads.map(_.lasted).sum
@@ -61,7 +62,7 @@ object ExecutionProgressReporter {
         case Some(time) ⇒ time
         case None ⇒
           val res = calculateTransitiveStartTimeOf(task)
-          transitiveStartTimeCache += task -> res
+          transitiveStartTimeCache += task → res
           res
       }
     def calculateTransitiveStartTimeOf(task: Task[_]): Long = {
@@ -103,13 +104,14 @@ object ExecutionProgressReporter {
       middle >= start.get && middle < end.get
   }
   case class OutputSetup(
-      startTime: Long,
-      endTime: Long,
-      timeWidth: Int = 9,
-      pureTimeWidth: Int = 10,
-      lockTimeWidth: Int = 10,
-      downloadsWidth: Int = 12,
-      nameWidth: Int = 30) {
+      startTime:      Long,
+      endTime:        Long,
+      timeWidth:      Int  = 9,
+      pureTimeWidth:  Int  = 10,
+      lockTimeWidth:  Int  = 10,
+      downloadsWidth: Int  = 12,
+      nameWidth:      Int  = 30
+  ) {
     val terminalWidth = JLineAccess.terminalWidth
     val totalNanos: Long = endTime - startTime
     val numberOfSlots = terminalWidth - timeWidth - pureTimeWidth - lockTimeWidth - downloadsWidth - nameWidth - 3 /* space */ - 2 /* brackets */
@@ -150,6 +152,14 @@ object ExecutionProgressReporter {
     val signs = setup.slots.map(stateAtSlot).map(stateSign).mkString
 
     // FIXME: put widths into format string
-    f"${data.workTime.get / 1000000}%6d ms ${scala.Console.GREEN}${data.pureTime / 1000000}%6d ms ${scala.Console.RED}${data.lockTime / 1000000}%6d ms ${scala.Console.CYAN}${data.downloadTime / 1000000}%6d ms ${data.downloads.size}%2d${scala.Console.RESET} $shortName%-30s >$signs${scala.Console.RESET}>"
+    Seq(
+      f"${data.workTime.get / 1000000}%6d ms",
+      f"${scala.Console.GREEN}${data.pureTime / 1000000}%6d ms",
+      f"${scala.Console.RED}${data.lockTime / 1000000}%6d ms",
+      f"${scala.Console.CYAN}${data.downloadTime / 1000000}%6d ms",
+      f"${data.downloads.size}%2d${scala.Console.RESET}",
+      f"$shortName%-30s",
+      s"$signs${scala.Console.RESET}>"
+    ).mkString(" ")
   }
 }
