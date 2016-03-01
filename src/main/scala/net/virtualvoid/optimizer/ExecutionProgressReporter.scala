@@ -58,11 +58,11 @@ object ExecutionProgressReporter {
 
     var transitiveStartTimeCache = Map.empty[Task[_], Long]
     def transitiveStartTimeOf(task: Task[_]): Long =
-      transitiveStartTimeCache.get(task) getOrElse {
+      transitiveStartTimeCache.getOrElse(task, {
         val res = calculateTransitiveStartTimeOf(task)
         transitiveStartTimeCache += task → res
         res
-      }
+      })
     def calculateTransitiveStartTimeOf(task: Task[_]): Long = {
       val timing = dataMap.get(task)
 
