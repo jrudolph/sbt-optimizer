@@ -1,0 +1,2 @@
+This release fixes sbt-optimizer usage when used in combination with sbt-revolver ([#9](https://github.com/jrudolph/sbt-optimizer/pull/9)).
+Thanks [@danielgratzl](https://github.com/danielgratzl) for the fix.

@@ -16,7 +16,7 @@ ASCII report once a tree of tasks has been run:
 Add the plugin to `project/plugins.sbt`:
 
 ```
-addSbtPlugin("net.virtual-void" % "sbt-optimizer" % "0.1.1")
+addSbtPlugin("net.virtual-void" % "sbt-optimizer" % "0.1.2")
 ```
 
 and enable it in a project with
