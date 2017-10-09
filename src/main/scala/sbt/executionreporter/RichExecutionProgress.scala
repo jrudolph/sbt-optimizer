@@ -24,6 +24,7 @@ import IvyLockReporter.{SpentTimeInLock, Listener}
 import ExecutionProgressReporter.TaskTiming
 
 import sbt._
+import internal.TaskName
 
 import scala.annotation.tailrec
 

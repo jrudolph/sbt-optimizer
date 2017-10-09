@@ -24,7 +24,7 @@ import java.util.concurrent.Callable
 import org.apache.ivy.util.CopyProgressListener
 import org.apache.ivy.util.url.URLHandler.URLInfo
 import org.apache.ivy.util.url.{URLHandler, URLHandlerRegistry}
-import sbt.{State, Keys, Command, Action, seq}
+import sbt.{State, Keys, Command, Action}
 import xsbti._
 
 import scala.util.{Failure, Success, Try}
@@ -55,8 +55,9 @@ object IvyDownloadReporter {
 
   val reportDownloadsCommand: Command = Command.command("report-downloads")(reportDownloadsAction)
 
-  def install() = seq(
-    Keys.initialize <<= (Keys.initialize, Keys.ivySbt) { (_, ivy) ⇒
+  def install() = Seq(
+    Keys.initialize := {
+      val ivy = Keys.ivySbt
       def replaceDefault(default: URLHandler): Unit =
         default match {
           case i: IvyDownloadReporter ⇒

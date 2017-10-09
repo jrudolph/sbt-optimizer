@@ -17,7 +17,7 @@
 
 package sbt.executionreporter
 
-import sbt.JLine
+import sbt.internal.util.JLine
 
 /** Helper class to access sbt's JLine instance */
 object JLineAccess {

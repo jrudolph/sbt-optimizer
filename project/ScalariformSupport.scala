@@ -15,6 +15,6 @@ object ScalariformSupport {
       .setPreference(RewriteArrowSymbols, true)
       .setPreference(AlignParameters, true)
       .setPreference(AlignSingleLineCaseStatements, true)
-      .setPreference(DoubleIndentClassDeclaration, true)
+      .setPreference(DoubleIndentConstructorArguments, true)
 
 }
