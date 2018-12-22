@@ -20,7 +20,7 @@ package sbt.executionreporter
 import java.util.concurrent.ConcurrentHashMap
 
 import net.virtualvoid.optimizer._
-import IvyLockReporter.{SpentTimeInLock, Listener}
+import IvyLockReporter.{ SpentTimeInLock, Listener }
 import ExecutionProgressReporter.TaskTiming
 
 import sbt._

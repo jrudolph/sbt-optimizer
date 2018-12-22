@@ -17,17 +17,17 @@
 
 package net.virtualvoid.optimizer
 
-import java.io.{File, FileOutputStream, InputStream}
+import java.io.{ File, FileOutputStream, InputStream }
 import java.net.URL
 import java.util.concurrent.Callable
 
 import org.apache.ivy.util.CopyProgressListener
 import org.apache.ivy.util.url.URLHandler.URLInfo
-import org.apache.ivy.util.url.{URLHandler, URLHandlerRegistry}
-import sbt.{State, Keys, Command, Action}
+import org.apache.ivy.util.url.{ URLHandler, URLHandlerRegistry }
+import sbt.{ State, Keys, Command, Action }
 import xsbti._
 
-import scala.util.{Failure, Success, Try}
+import scala.util.{ Failure, Success, Try }
 import scala.util.control.NonFatal
 
 trait DownloadListener {
@@ -71,8 +71,7 @@ object IvyDownloadReporter {
 
       replaceDefault(URLHandlerRegistry.getDefault)
     },
-    Keys.commands += reportDownloadsCommand
-  )
+    Keys.commands += reportDownloadsCommand)
 
   def printTracingReport(traceEntries: Seq[NetworkAccess]): Unit = {
     def totalBytes(entries: Seq[NetworkAccess]): Long =

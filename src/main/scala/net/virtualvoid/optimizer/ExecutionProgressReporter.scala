@@ -36,8 +36,7 @@ object ExecutionProgressReporter {
       completeTime: Option[Long]                         = None,
       threadId:     Long                                 = -1,
       locks:        Seq[IvyLockReporter.SpentTimeInLock] = Nil,
-      downloads:    Seq[NetworkAccess]                   = Nil
-  ) {
+      downloads:    Seq[NetworkAccess]                   = Nil) {
     def workTime: Option[Long] = diff(startTime, finishTime)
     def totalTime: Option[Long] = diff(registerTime, completeTime)
     def downloadTime: Long = downloads.map(_.lasted).sum
@@ -122,8 +121,7 @@ object ExecutionProgressReporter {
       pureTimeWidth:  Int  = 10,
       lockTimeWidth:  Int  = 10,
       downloadsWidth: Int  = 12,
-      nameWidth:      Int  = 30
-  ) {
+      nameWidth:      Int  = 30) {
     val terminalWidth = JLineAccess.terminalWidth
     val totalNanos: Long = endTime - startTime
     val numberOfSlots = terminalWidth - timeWidth - pureTimeWidth - lockTimeWidth - downloadsWidth - nameWidth - 3 /* space */ - 2 /* brackets */
@@ -171,7 +169,6 @@ object ExecutionProgressReporter {
       f"${scala.Console.CYAN}${data.downloadTime / 1000000}%6d ms",
       f"${data.downloads.size}%2d${scala.Console.RESET}",
       f"$shortName%-30s",
-      s"$signs${scala.Console.RESET}>"
-    ).mkString(" ")
+      s"$signs${scala.Console.RESET}>").mkString(" ")
   }
 }
